@@ -9,10 +9,20 @@ let gallery = new SimpleLightbox('.gallery a', {
 });
 
 const gallery1 = document.querySelector('.gallery');
+const loading = document.querySelector('.loader');
 
-document.addEventListener('DOMContentLoaded', () => {});
+// document.addEventListener('DOMContentLoaded', () => {});
 
 export function createGallery(images) {
+  //   gallery1.refresh();
+  let gallery = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionsData: 'alt',
+    captionDelay: 250,
+    captionPosition: 'bottom',
+  });
+  console.log(gallery.refresh());
+
   const elems = images
     .map(image => {
       const markup = `<li class="gallery-item">
@@ -45,25 +55,19 @@ export function createGallery(images) {
       return markup;
     })
     .join('');
-  //   gallery1.refresh();
+
   gallery1.innerHTML = elems;
-  let gallery = new SimpleLightbox('.gallery a', {
-    captions: true,
-    captionsData: 'alt',
-    captionDelay: 250,
-    captionPosition: 'bottom',
-  });
-  gallery.refresh();
+
   return;
 }
 export function clearGallery() {
   gallery1.destroy();
 }
 export function showLoader() {
-  gallery1.classList.add('loader');
+  loading.classList.add('loader');
 }
 export function hideLoader() {
-  gallery1.classList.remove('loader');
+  loading.classList.remove('loader');
 }
 
 // document.addEventListener('DOMContentLoaded', () => {

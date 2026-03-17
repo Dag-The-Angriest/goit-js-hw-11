@@ -11,6 +11,7 @@ import {
 const form = document.querySelector('.form');
 form.addEventListener('submit', e => {
   e.preventDefault();
+  showLoader();
   const formData = new FormData(e.target);
   const obj = {
     name: formData.get('search-text'),
@@ -20,13 +21,14 @@ form.addEventListener('submit', e => {
     // console.log(arr);
     if (arr.length == 0) {
       console.log('yes');
-
+      hideLoader();
       return iziToast.show({
         message:
           'Sorry, there are no images matching your search query. Please try again!',
         position: 'bottomRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
       });
     }
+    hideLoader();
     return createGallery(arr);
   });
   //   console.log(arr);
