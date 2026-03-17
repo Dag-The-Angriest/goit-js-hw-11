@@ -15,13 +15,6 @@ const loading = document.querySelector('.loader');
 
 export function createGallery(images) {
   //   gallery1.refresh();
-  let gallery = new SimpleLightbox('.gallery a', {
-    captions: true,
-    captionsData: 'alt',
-    captionDelay: 250,
-    captionPosition: 'bottom',
-  });
-  console.log(gallery.refresh());
 
   const elems = images
     .map(image => {
@@ -57,7 +50,13 @@ export function createGallery(images) {
     .join('');
 
   gallery1.innerHTML = elems;
-
+  let gallery = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionsData: 'alt',
+    captionDelay: 250,
+    captionPosition: 'bottom',
+  });
+  gallery.refresh();
   return;
 }
 export function clearGallery() {
