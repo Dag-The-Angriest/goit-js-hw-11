@@ -12,25 +12,38 @@ const form = document.querySelector('.form');
 form.addEventListener('submit', e => {
   e.preventDefault();
   showLoader();
+  clearGallery();
   const formData = new FormData(e.target);
   const obj = {
     name: formData.get('search-text'),
   };
-  const arr = getImagesByQuery(obj.name).then(res => {
-    const arr = res.hits;
-    // console.log(arr);
-    if (arr.length == 0) {
-      console.log('yes');
+  if (obj.name == undefined) {
+    return;
+  }
+  const arr = getImagesByQuery(obj.name)
+    .then(res => {
+      const arr = res.hits;
+      // console.log(arr);
+      if (arr.length == 0) {
+        console.log('yes');
+        hideLoader();
+        //   clearGallery();
+        return iziToast.show({
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+          position: 'bottomRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+        });
+      }
+      hideLoader();
+      return createGallery(arr);
+    })
+    .catch(res => {
       hideLoader();
       return iziToast.show({
-        message:
-          'Sorry, there are no images matching your search query. Please try again!',
+        message: 'There was an error!',
         position: 'bottomRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
       });
-    }
-    hideLoader();
-    return createGallery(arr);
-  });
+    });
   //   console.log(arr);
 });
 
