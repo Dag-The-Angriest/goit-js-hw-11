@@ -17,7 +17,8 @@ form.addEventListener('submit', e => {
   const obj = {
     name: formData.get('search-text'),
   };
-  if (obj.name == undefined) {
+  if (obj.name == '') {
+    hideLoader();
     return;
   }
   const arr = getImagesByQuery(obj.name)

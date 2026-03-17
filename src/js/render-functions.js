@@ -11,18 +11,24 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const gallery1 = document.querySelector('.gallery');
 const loading = document.querySelector('.loader');
 
+let gallery = new SimpleLightbox('.gallery a', {
+  captions: true,
+  captionsData: 'alt',
+  captionDelay: 250,
+  captionPosition: 'bottom',
+});
 // document.addEventListener('DOMContentLoaded', () => {});
 
 export function createGallery(images) {
   //   gallery1.refresh();
-  clearGallery();
+
   const elems = images
     .map(image => {
       const markup = `<li class="gallery-item">
           <a class="gallery-link" href="${image.largeImageURL}">
               <img
                 class="gallery-image"
-                src="${image.previewURL}"
+                src="${image.webformatURL}"
                 alt="${image.tags}"
               /> 
           </a>
@@ -50,13 +56,8 @@ export function createGallery(images) {
     .join('');
 
   gallery1.innerHTML = elems;
-  let gallery = new SimpleLightbox('.gallery a', {
-    captions: true,
-    captionsData: 'alt',
-    captionDelay: 250,
-    captionPosition: 'bottom',
-  });
 
+  gallery.refresh();
   return;
 }
 export function clearGallery() {
